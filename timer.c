@@ -1,62 +1,59 @@
 #include <stdio.h>
 #include<time.h>
 #include<stdlib.h>
-int main() {
-    // int hour,minute,seconds;
-    
-    // printf("Hours: ");
-    // scanf("%d", &hour);
-    // printf("Minutes: ");
-    // scanf("%d", &minute);
-    // printf("Seconds: ");
-    // scanf("%d", &seconds);
 
-    // seconds=hour*3600+minute*60+seconds;
-    
-    // while (seconds > 0) {
-    //     printf("%d...\n", seconds);
-    //     sleep(1);
-    //     seconds--;
-    // }
 
-    // printf("Time's up!");
-    int choice,total_time,minute,seconds;
+void start_timer();
+
+int choice,total_time,minute,seconds;
+int timer(){
+
+    
     time_t current_time;  //time_t is a datatype which is used to store time related datas
      char real_time[100];
     while(1){
         system("clear");
         time(&current_time); //time() is a library function defined in time.h header file which is used here to get the current system time
         strftime(real_time, sizeof(real_time), "%H:%M", localtime(&current_time));//strftime() is a function which converts current time into string format
-    printf("\n\n\n\n\n\n\n\n\n");
-    printf("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t(5) Start Timer\n\n\n\n");
-    printf("\t\t\t\t\t\t\t\t\t ________________\n");
-    printf("\t\t\t\t\t\t\t\t\t|                |\n");  
-    printf("\t\t\t\t\t\t\t\t\t|                |\n");
-    printf("\t\t\t\t\t\t\t\t\t|                |\n"); 
-    printf("\t\t\t\t\t\t\t\t\t|                |\n"); 
-    printf("\t\t\t\t\t\t\t\t\t|________________|\n"); 
-    printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-    printf("\t\t\t\t\t (1)\t\t\t (2)\t\t\t (3)\t\t\t (4)\n");
-    printf("\t\t\t\t\tCLOCK\t\t\tALARM\t\t\tTIMER\t\t\tEXIT\n");
-    printf("\t\t\t\t\tEnter your choice \n");
-    printf("\t\t\t\t\t");
-    scanf("%d",&choice);
-    switch (choice)
-    {
-    case 1:
-        continue;
-        break;
-    case 2:
-    //alarm();
-        break;
-    case 3:
-        break;
-    case 4:
-        exit(0);
-        
-    case 5:
-        
-        printf("\t\t\t\t\tMinutes: ");
+        printf("\n\n\n\n\n\n\n\n\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t(5) Start Timer\n\n\n\n");
+        printf("\t\t\t\t\t\t_________  _________                   _________   ___\n");
+        printf("\t\t\t\t\t\t    |          |      |\\          /|  |           |   \\\n");
+        printf("\t\t\t\t\t\t    |          |      | \\        / |  |           |   |\n");
+        printf("\t\t\t\t\t\t    |          |      |  \\      /  |  |________   |___/\n");
+        printf("\t\t\t\t\t\t    |          |      |   \\    /   |  |           |\\\n");
+        printf("\t\t\t\t\t\t    |          |      |    \\  /    |  |           | \\\n");
+        printf("\t\t\t\t\t\t    |      ____|____  |     \\/     |  |_________  |  \\\n");
+        printf("\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        printf("\t\t\t\t\t (1)\t\t\t (2)\t\t\t (3)\t\t\t (4)\n");
+        printf("\t\t\t\t\tCLOCK\t\t\tALARM\t\t\tTIMER\t\t\tEXIT\n\n");
+        printf("\t\t\t\t\tEnter your choice \n");
+        printf("\t\t\t\t\t");
+        scanf("%d",&choice);
+        switch (choice)
+        {
+            case 1:
+                return 1;
+            case 2:
+                return 2;
+            case 3:
+                continue;;
+            case 4:
+                exit(0);
+            case 5:
+                 start_timer();
+                 continue;
+            default:
+                printf("\t\t\t\t\tInvalid choice\n");
+                sleep(2);
+                continue;
+        }
+        //sleep(60);
+         }
+}   
+//this function is called in case 5
+void     start_timer(){
+     printf("\t\t\t\t\tMinutes: ");
         scanf("%d", &minute);
         printf("\t\t\t\t\tSeconds: ");
         scanf("%d", &seconds);
@@ -80,15 +77,4 @@ int main() {
 
         printf("\n\t\t\t\t\tTime Over!!\n");
         sleep(4);
-         continue;
-    
-    default:
-        printf("\t\t\t\t\tInvalid choice\n");
-        sleep(2);
-        continue;
-    }
-    //sleep(60);
-     }
-
-    return 0;
 }
