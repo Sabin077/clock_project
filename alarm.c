@@ -4,14 +4,16 @@
 #include<stdlib.h>
 
 void add_alarm();
-void close_alarm();
+void close_alarm(int);
 void check_alarm();
+void snooze_alarm(int);
 char real_time[100], alarm_time[100];
-int count;
+time_t current_time;  //time_t is a datatype which is used to store time related data
+int count,flag;
+
 int alarm() {
     int choice;
     char reader[100]; 
-    time_t current_time;  //time_t is a datatype which is used to store time related data
      while(1){
         here:
 
@@ -20,13 +22,13 @@ int alarm() {
         system("clear");
         time(&current_time); //time() is a library function defined in time.h header file which is used here to get the current system time
         strftime(real_time, sizeof(real_time), "%H:%M", localtime(&current_time));//strftime() is a function which converts current time into string format
-    printf("\n\n\n\n\n\n\n\n");
-    printf("Time=%s\n",real_time);
-    printf("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t(5) Add Alarm\n");
-    printf("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t(6) Close Alarm\n\n\n");
-    printf("\t\t\t\t\t\t\t\t\t ________________\n");
-    printf("\t\t\t\t\t\t\t\t\t|                |\n"); 
-    //to read the alarm time from the file and print in box
+         printf("\n\n\n\n\n\n\n\n");
+         printf("Time=%s\n",real_time);
+         printf("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t(5) Add Alarm\n");
+         printf("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t(6) Close Alarm\n\n\n");
+         printf("\t\t\t\t\t\t\t\t\t ________________\n");
+         printf("\t\t\t\t\t\t\t\t\t|                |\n"); 
+        //to read the alarm time from the file and print in box
             FILE *fp1;
             fp1 = fopen("alarm.txt","r");
             
@@ -39,7 +41,14 @@ int alarm() {
     printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     printf("\t\t\t\t\t (1)\t\t\t (2)\t\t\t (3)\t\t\t (4)\n");
     printf("\t\t\t\t\tCLOCK\t\t\tALARM\t\t\tTIMER\t\t\tEXIT\n\n");
+
+    flag=0;
+    //to compare time with alarm time
     check_alarm();
+    if(flag==1){
+        goto here;
+    }
+
     printf("\t\t\t\t\tEnter your choice \n");
     printf("\t\t\t\t\t");
     scanf("%d",&choice);
@@ -54,10 +63,16 @@ int alarm() {
         case 4:
             exit(0);
         case 5:
+
             add_alarm();
             goto here;
         case 6:
-            close_alarm();
+            /*to delete in a file we need to copy it to another file except the line we want to delete
+            and again copy to our original file*/
+            int alarm_no;
+            printf("\t\t\t\t\tEnter Alarm No: ");
+            scanf("%d",&alarm_no);
+            close_alarm(alarm_no);
             continue;
         default:
             printf("\t\t\t\t\tInvalid choice\n");
@@ -71,7 +86,7 @@ int alarm() {
 }
 
 void add_alarm(){
-    printf("\t\t\t\t\tSet Alarm(HH:MM):");
+            printf("\t\t\t\t\tSet Alarm(HH:MM):");
             scanf("%s",alarm_time);
             //save time in file
             FILE *fp;
@@ -80,12 +95,8 @@ void add_alarm(){
             fclose(fp);
 }
 
-void close_alarm(){
-         /*to delete in a file we need to copy it to another file except the line we want to delete
-            and again copy to our original file*/
-            int alarm_no,count;
-            printf("\t\t\t\t\tEnter Alarm No: ");
-            scanf("%d",&alarm_no);
+void close_alarm(int alarm_no){
+            int count;
             //to copy from alarm.txt to temp.txt
             FILE *fp4;
             fp4 = fopen("alarm.txt","r");
@@ -114,30 +125,49 @@ void close_alarm(){
 }
 
 void check_alarm(){
-          //24-hr format ma check garne alarm ko status
-    FILE *fp2;
-            fp2 = fopen("alarm.txt","r");
-            
-             while(fscanf(fp2, "%s", alarm_time)!=EOF){ 
+    //24-hr format ma check garne alarm ko status
+    FILE *fp_check;
+    fp_check = fopen("alarm.txt","r");
 
-                     if(strcmp(alarm_time, real_time)==0){ 
-                        //put beep sounnd here
-                        
-                        for(int i=1;i<=3;i++){
-                            printf("\t\t\t\t\tAlarm is ringing\n");
-                            sleep(1);
-                        }
-                        char stop;
-                        printf("\t\t\t\t\tPress 's' to stop:");
-                        scanf("%s",&stop);
-                        while (1)
-                        {
-                            if(stop=='s'|| stop=='S'){
-                                break;
-                            }
-                            printf("Alarm is ringing");
-                        }
-                      }  
+    count=0;
+
+    while(fscanf(fp_check, "%s", alarm_time)!=EOF){ 
+        count++;
+         if(strcmp(alarm_time, real_time)==0){ 
+             //put beep sounnd here
+            flag=1;
+            for(int i=1;i<=3;i++){
+                printf("\t\t\t\t\tAlarm is ringing\n");
+                sleep(1);
+            }
+
+            char alarm_choice;
+            printf("\t\t\t\t\tPress 's' to Snooze or 'c' to Close Alarm:");
+            scanf("%s",&alarm_choice);
+
+                if(alarm_choice=='c'|| alarm_choice=='C'){
+                    close_alarm(count);
+                    break;
+                }
+                else if(alarm_choice=='s'|| alarm_choice=='S'){
+                    snooze_alarm(count);
+                    break;
+                }
+         }  
               
-              }
+    }
+    fclose(fp_check);
+}
+
+void snooze_alarm(int count){
+    time_t snooze_time=current_time+10*60;  //it will add 10 minutes to current time
+    strftime(real_time, sizeof(real_time), "%H:%M", localtime(&snooze_time));
+    //before adding snooze time we need to close the previous
+    close_alarm(count);
+    //to upadte snooze time as snooze time will be 10 minutes later
+  
+      FILE *fp_snooze;
+            fp_snooze = fopen("alarm.txt","a");
+            fprintf(fp_snooze,"%s\n",real_time);
+            fclose(fp_snooze);
 }
