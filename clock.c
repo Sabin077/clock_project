@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
-// #include "alarm.c"
-// #include "timer.c"
+
+//prototypes
 char * getdate();
+
 int clocks(){
 
     int choice;
@@ -22,8 +23,8 @@ int clocks(){
     printf("\t\t\t\t\t\t\t\t\t|                |\n");
     printf("\t\t\t\t\t\t\t\t\t|________________|\n"); 
     printf("\n\n\n\n\n\n\n\n\n\n\n\n");
-    printf("\t\t\t\t\t (1)\t\t\t (2)\t\t\t (3)\t\t\t (4)\n");
-    printf("\t\t\t\t\tCLOCK\t\t\tALARM\t\t\tTIMER\t\t\tEXIT\n\n");
+    printf("\t\t\t\t\t (1)\t\t\t (2)\t\t\t (3)\t\t\t (4)\t\t\t (5)\n");
+    printf("\t\t\t\t\tCLOCK\t\t\tALARM\t\t\tTIMER\t\t       CALANDER\t\t\t EXIT\n\n");
     printf("\t\t\t\t\tEnter your choice \n");
     printf("\t\t\t\t\t");
     scanf("%d",&choice);
@@ -32,12 +33,12 @@ int clocks(){
     case 1:
         continue;
     case 2:
-       // pop();
        return 2;
     case 3:
-         //timers();
          return 3;
     case 4:
+        return 4;
+    case 5:
         exit(0);
     default:
         printf("\t\t\t\t\tInvalid choice\n");

@@ -24,8 +24,8 @@ int alarm() {
         strftime(real_time, sizeof(real_time), "%H:%M", localtime(&current_time));//strftime() is a function which converts current time into string format
          printf("\n\n\n\n\n\n\n\n");
          printf("Time=%s\n",real_time);
-         printf("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t(5) Add Alarm\n");
-         printf("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t(6) Close Alarm\n\n\n");
+         printf("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t(6) Add Alarm\n");
+         printf("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t(7) Close Alarm\n\n\n");
          printf("\t\t\t\t\t\t\t\t\t ________________\n");
          printf("\t\t\t\t\t\t\t\t\t|                |\n"); 
         //to read the alarm time from the file and print in box
@@ -39,8 +39,8 @@ int alarm() {
               }  
     printf("\t\t\t\t\t\t\t\t\t|________________|\n"); 
     printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-    printf("\t\t\t\t\t (1)\t\t\t (2)\t\t\t (3)\t\t\t (4)\n");
-    printf("\t\t\t\t\tCLOCK\t\t\tALARM\t\t\tTIMER\t\t\tEXIT\n\n");
+    printf("\t\t\t\t\t (1)\t\t\t (2)\t\t\t (3)\t\t\t (4)\t\t\t (5)\n");
+    printf("\t\t\t\t\tCLOCK\t\t\tALARM\t\t\tTIMER\t\t       CALANDER\t\t\t EXIT\n\n");
 
     flag=0;
     //to compare time with alarm time
@@ -61,12 +61,13 @@ int alarm() {
         case 3:
             return 3;
         case 4:
-            exit(0);
+            return 4;
         case 5:
-
+            exit(0);
+        case 6:
             add_alarm();
             goto here;
-        case 6:
+        case 7:
             /*to delete in a file we need to copy it to another file except the line we want to delete
             and again copy to our original file*/
             int alarm_no;

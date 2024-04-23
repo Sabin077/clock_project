@@ -1,43 +1,37 @@
-// #include <time.h>
-// #include <stdio.h>
-// 
-// time_t current_time;
-// time_t tenMinutesAgo;
-// 
-// int main() {
-//   char* c_time_string;
-//   current_time = time(NULL);
-//   tenMinutesAgo = current_time + 10*60;//the time 10 minutes ago is 10*60
-// 
-//   c_time_string = ctime(&tenMinutesAgo);//convert the time tenMinutesAgo into a string format in the local time format
-// 
-//   printf("The time 10 minutes ago in seconds from the epoch is: %i\n", (int)tenMinutesAgo);
-//   printf("The time 10 minutes ago from the epoch in the local time format is: %s\n", c_time_string);
-// 
-//   return 0;
-// }
-// 
-// 
-
-
 #include<stdio.h>
-#include<time.h>
-int main(){
+// #include<conio.h>
 
+void main()
+{
+ int year, month, date;
+//  clrscr();
+ /* Taking Input from User */
+ printf("Give BS date in year month and date:\n");
+ scanf("%d%d%d",&year,&month,&date);
+/* Changing Date */
+if(date > 17)
+ {	
+  date -= 17;
+ }
+ else
+ {
+  date =date+ 30;
+  month=month-1;
+  date =date- 17;
+ }
 
-    char real_time[100];
-    time_t current_time;  //time_t is a datatype which is used to store time related data
+ if(month > 8)
+ {
+  month -= 8;
+ }
+ else
+ {
+  month += 12;
+  --year;
+  month -= 8;
+ }
+ year -= 56;
 
-        time(&current_time); //time() is a library function defined in time.h header file which is used here to get the current system time
-        strftime(real_time, sizeof(real_time), "%H:%M", localtime(&current_time));
-    printf("Current time : %s\n", real_time);
-    
-    time_t ten=current_time+10*60;
-    strftime(real_time, sizeof(real_time), "%H:%M", localtime(&ten));
-    printf("10 minutes from now : %s\n", real_time);
-
-
-
-
-        return 0;
-     }
+ /* Display Output */
+printf("Date in AD is : %d-%d-%d\n",year, month, date);
+}

@@ -4,6 +4,7 @@
 #include "clock.c"
 #include "timer.c"
 #include "alarm.c"
+#include "calander.c"
 
 int main() {
     system("clear");
@@ -21,7 +22,8 @@ int main() {
         
         else if(a==3)
             a=timer();
-
+        else if(a==4)
+            a=calander();
         else
             break;
 

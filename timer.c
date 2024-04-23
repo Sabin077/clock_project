@@ -16,7 +16,7 @@ int timer(){
         time(&current_time); //time() is a library function defined in time.h header file which is used here to get the current system time
         strftime(real_time, sizeof(real_time), "%H:%M", localtime(&current_time));//strftime() is a function which converts current time into string format
         printf("\n\n\n\n\n\n\n\n\n");
-        printf("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t(5) Start Timer\n\n\n\n");
+        printf("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t(6) Start Timer\n\n\n\n");
         printf("\t\t\t\t\t\t_________  _________                   _________   ___\n");
         printf("\t\t\t\t\t\t    |          |      |\\          /|  |           |   \\\n");
         printf("\t\t\t\t\t\t    |          |      | \\        / |  |           |   |\n");
@@ -25,8 +25,8 @@ int timer(){
         printf("\t\t\t\t\t\t    |          |      |    \\  /    |  |           | \\\n");
         printf("\t\t\t\t\t\t    |      ____|____  |     \\/     |  |_________  |  \\\n");
         printf("\n\n\n\n\n\n\n\n\n\n\n\n\n");
-        printf("\t\t\t\t\t (1)\t\t\t (2)\t\t\t (3)\t\t\t (4)\n");
-        printf("\t\t\t\t\tCLOCK\t\t\tALARM\t\t\tTIMER\t\t\tEXIT\n\n");
+        printf("\t\t\t\t\t (1)\t\t\t (2)\t\t\t (3)\t\t\t (4)\t\t\t (5)\n");
+        printf("\t\t\t\t\tCLOCK\t\t\tALARM\t\t\tTIMER\t\t       CALANDER\t\t\t EXIT\n\n");
         printf("\t\t\t\t\tEnter your choice \n");
         printf("\t\t\t\t\t");
         scanf("%d",&choice);
@@ -37,10 +37,12 @@ int timer(){
             case 2:
                 return 2;
             case 3:
-                continue;;
+                continue;
             case 4:
-                exit(0);
+                return 4;
             case 5:
+                exit(0);
+            case 6:
                  start_timer();
                  continue;
             default:
