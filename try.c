@@ -1,37 +1,11 @@
-#include<stdio.h>
-// #include<conio.h>
+#include <stdio.h>
+#include<stdlib.h>
+int main()
 
-void main()
 {
- int year, month, date;
-//  clrscr();
- /* Taking Input from User */
- printf("Give BS date in year month and date:\n");
- scanf("%d%d%d",&year,&month,&date);
-/* Changing Date */
-if(date > 17)
- {	
-  date -= 17;
- }
- else
- {
-  date =date+ 30;
-  month=month-1;
-  date =date- 17;
- }
 
- if(month > 8)
- {
-  month -= 8;
- }
- else
- {
-  month += 12;
-  --year;
-  month -= 8;
- }
- year -= 56;
+    system("play -n synth 0.1 sine 880 vol 0.5");
+    system("play -n synth pl G2 pl B2 pl D3 pl G3 pl D4 pl G4     delay 0 .05 .1 .15 .2 .25 remix - fade 0 4 .1 norm -1");
+    
 
- /* Display Output */
-printf("Date in AD is : %d-%d-%d\n",year, month, date);
 }

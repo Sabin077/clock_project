@@ -7,9 +7,11 @@ void add_alarm();
 void close_alarm(int);
 void check_alarm();
 void snooze_alarm(int);
+void sound(int);
+
 char real_time[100], alarm_time[100];
 time_t current_time;  //time_t is a datatype which is used to store time related data
-int count,flag;
+int count,flag,tone=1;
 
 int alarm() {
     int choice;
@@ -22,10 +24,11 @@ int alarm() {
         system("clear");
         time(&current_time); //time() is a library function defined in time.h header file which is used here to get the current system time
         strftime(real_time, sizeof(real_time), "%H:%M", localtime(&current_time));//strftime() is a function which converts current time into string format
-         printf("\n\n\n\n\n\n\n\n");
+         printf("\n\n\n\n\n\n");
          printf("Time=%s\n",real_time);
          printf("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t(6) Add Alarm\n");
-         printf("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t(7) Close Alarm\n\n\n");
+         printf("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t(7) Close Alarm\n");
+         printf("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t(8) Change Ringtone\n\n");
          printf("\t\t\t\t\t\t\t\t\t ________________\n");
          printf("\t\t\t\t\t\t\t\t\t|                |\n"); 
         //to read the alarm time from the file and print in box
@@ -75,6 +78,12 @@ int alarm() {
             scanf("%d",&alarm_no);
             close_alarm(alarm_no);
             continue;
+         case 8:
+            printf("\t\t\t\t\t1. Beep Sound\n");
+            printf("\t\t\t\t\t2. Asoutic Guitar\n");
+            printf("\t\t\t\t\tEnter your choice: ");
+            scanf("%d",&tone);
+            break;
         default:
             printf("\t\t\t\t\tInvalid choice\n");
             sleep(2);
@@ -137,14 +146,14 @@ void check_alarm(){
          if(strcmp(alarm_time, real_time)==0){ 
              //put beep sounnd here
             flag=1;
-            for(int i=1;i<=3;i++){
+                sound(tone);
                 printf("\t\t\t\t\tAlarm is ringing\n");
                 sleep(1);
-            }
+            
 
-            char alarm_choice;
-            printf("\t\t\t\t\tPress 's' to Snooze or 'c' to Close Alarm:");
-            scanf("%s",&alarm_choice);
+                char alarm_choice;
+                printf("\t\t\t\t\tPress 's' to Snooze or 'c' to Close Alarm:");
+                alarm_choice=getchar();
 
                 if(alarm_choice=='c'|| alarm_choice=='C'){
                     close_alarm(count);
@@ -172,3 +181,16 @@ void snooze_alarm(int count){
             fprintf(fp_snooze,"%s\n",real_time);
             fclose(fp_snooze);
 }
+
+void sound(int tone){
+    //using sox which is command line audio processing tool
+    if(tone==1){
+        //beep
+        system("play -n synth 0.1 sine 880 vol 0.5");
+    }
+    else if(tone==2){
+        //guitar sound
+        system("play -n synth pl G2 pl B2 pl D3 pl G3 pl D4 pl G4     delay 0 .05 .1 .15 .2 .25 remix - fade 0 4 .1 norm -1");
+    }
+}
+
